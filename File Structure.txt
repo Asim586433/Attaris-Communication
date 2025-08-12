@@ -1,0 +1,11 @@
+Attaris-Communication/
+├── index.html
+├── products.html
+├── about.html
+├── contact.html
+├── faq.html
+├── privacy-policy.html
+├── shipping-policy.html
+├── returns-policy.html
+├── styles.css
+└── script.js

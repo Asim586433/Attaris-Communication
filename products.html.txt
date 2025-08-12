@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attaris Communication - Products</title>
+    <style>
+        /* ===== Global Styles ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ===== Header Styles ===== */
+        header {
+            background: #2c3e50;
+            padding: 1rem;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .logo a {
+            color: white;
+            text-decoration: none;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background: #34495e;
+        }
+
+        nav ul li a.current-page {
+            background: #3498db;
+            font-weight: bold;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+        }
+
+        /* ===== Products Section ===== */
+        .products-section {
+            padding: 80px 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #2c3e50;
+            font-size: 2.5rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: #3498db;
+            margin: 20px auto;
+        }
+
+        /* Product Filters */
+        .product-filters {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            background: #ecf0f1;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: #3498db;
+            color: white;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #e74c3c;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 1;
+        }
+
+        .product-image {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            min-height: 60px;
+        }
+
+        .product-price {
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: #95a5a6;
+            font-size: 1rem;
+            margin-left: 5px;
+        }
+
+        .product-description {
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            min-height: 60px;
+        }
+
+        .product-specs {
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+        }
+
+        .product-specs li {
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .product-specs li::before {
+            content: '✓';
+            color: #2ecc71;
+            margin-right: 8px;
+        }
+
+        .add-to-cart {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .add-to-cart:hover {
+            background: #2980b9;
+        }
+
+        /* Product Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+            gap: 10px;
+        }
+
+        .page-btn {
+            padding: 8px 15px;
+            background: #ecf0f1;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .page-btn:hover, .page-btn.active {
+            background: #3498db;
+            color: white;
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 50px 20px 30px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-section p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .footer-section ul {
+            list-style-type: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: white;
+        }
+
+        .footer-links {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #34495e;
+        }
+
+        .footer-links a {
+            color: #bdc3c7;
+            margin: 0 10px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #34495e;
+            width: 100%;
+            text-align: center;
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+
+        /* ===== Responsive Design ===== */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .footer-section {
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo"><a href="index.html">Attaris Communication</a></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html" class="current-page">Products</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                </ul>
+            </nav>
+            <div class="cart-icon">
+                🛒 <span class="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="products-section">
+        <div class="container">
+            <h2 class="section-title">Our Products</h2>
+            
+            <div class="product-filters">
+                <button class="filter-btn active">All Products</button>
+                <button class="filter-btn">Two-Way Radios</button>
+                <button class="filter-btn">Wireless Headsets</button>
+                <button class="filter-btn">Conference Systems</button>
+                <button class="filter-btn">Accessories</button>
+            </div>
+            
+            <div class="products-grid">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <div class="product-badge">Best Seller</div>
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Professional Radio">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Professional Two-Way Radio XT-5000</h3>
+                        <div class="product-price">Rs. 45,999 <span class="old-price">Rs. 49,999</span></div>
+                        <p class="product-description">Long-range professional two-way radio with 128 channels and waterproof design.</p>
+                        <ul class="product-specs">
+                            <li>5W Transmission Power</li>
+                            <li>IP67 Waterproof Rating</li>
+                            <li>128 Programmable Channels</li>
+                            <li>Up to 10km Range</li>
+                        </ul>
+                        <button class="add-to-cart" data-product-id="xt5000">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <div class="product-badge">New</div>
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Bluetooth Headset">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Bluetooth Business Headset BH-200</h3>
+                        <div class="product-price">Rs. 12,499</div>
+                        <p class="product-description">Noise-cancelling wireless headset with 30-hour battery life.</p>
+                        <ul class="product-specs">
+                            <li>Active Noise Cancellation</li>
+                            <li>30 Hours Battery Life</li>
+                            <li>Multi-Device Connectivity</li>
+                            <li>Built-in Microphone</li>
+                        </ul>
+                        <button class="add-to-cart" data-product-id="bh200">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1504274066651-8d31a536b11a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Conference System">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Conference Speakerphone CS-300</h3>
+                        <div class="product-price">Rs. 32,999</div>
+                        <p class="product-description">Professional conference system for clear voice transmission.</p>
+                        <ul class="product-specs">
+                            <li>360° Voice Pickup</li>
+                            <li>Bluetooth & USB Connectivity</li>
+                            <li>Supports 8 Participants</li>
+                            <li>Plug-and-Play Setup</li>
+                        </ul>
+                        <button class="add-to-cart" data-product-id="cs300">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <div class="product-badge">Sale</div>
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Gaming Headset">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Pro Gaming Headset GH-800</h3>
+                        <div class="product-price">Rs. 15,999 <span class="old-price">Rs. 19,999</span></div>
+                        <p class="product-description">High-performance gaming headset with surround sound.</p>
+                        <ul class="product-specs">
+                            <li>7.1 Surround Sound</li>
+                            <li>Noise-Cancelling Mic</li>
+                            <li>RGB Lighting</li>
+                            <li>Memory Foam Earpads</li>
+                        </ul>
+                        <button class="add-to-cart" data-product-id="gh800">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Product 5 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1605464315542-bda3e2f4e605?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Radio Accessory">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Radio Battery Pack BP-100</h3>
+                        <div class="product-price">Rs. 6,499</div>
+                        <p class="product-description">High-capacity battery pack for compatible radio models.</p>
+                        <ul class="product-specs">
+                            <li>3000mAh Capacity</li>
+                            <li>Fast Charging Support</li>
+                            <li>Compatible with XT Series</li>
+                            <li>1 Year Warranty</li>
+                        </ul>
+                        <button class="add-to-cart" data-product-id="bp100">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Product 6 -->
+                <div class="product-card">
+                    <div class="product-badge">Limited Stock</div>
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Earpiece">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Security Earpiece SE-200</h3>
+                        <div class="product-price">Rs. 3,999</div>
+                        <p class="product-description">Discreet earpiece for security professionals.</p>
+                        <ul class="product-specs">
+                            <li>Clear Audio Quality</li>
+                            <li>Comfortable Fit</li>
+                            <li>Works with Most Radios</li>
+                            <li>Multiple Ear Tips Included</li>
+                        </ul>
+                        <button class="add-to-cart" data-product-id="se200">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pagination">
+                <button class="page-btn">❮ Previous</button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn">Next ❯</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Attaris Communication</h3>
+                <p>Your trusted partner for communication solutions</p>
+                <p>Johar Block 19, Gulistan-e-Johar, Karachi</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Policies</h3>
+                <ul>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="shipping-policy.html">Shipping Policy</a></li>
+                    <li><a href="returns-policy.html">Returns Policy</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-links">
+            <a href="privacy-policy.html">Privacy Policy</a> | 
+            <a href="shipping-policy.html">Shipping Policy</a> | 
+            <a href="returns-policy.html">Returns Policy</a> | 
+            <a href="faq.html">FAQ</a>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Attaris Communication. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Cart Functionality
+        let cartCount = localStorage.getItem('attarisCartCount') || 0;
+        let cart = JSON.parse(localStorage.getItem('attarisCart')) || {};
+        
+        const updateCartCount = () => {
+            document.querySelectorAll('.cart-count').forEach(el => {
+                el.textContent = cartCount;
+            });
+            localStorage.setItem('attarisCartCount', cartCount);
+            localStorage.setItem('attarisCart', JSON.stringify(cart));
+        };
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCartCount();
+            
+            // Current page indicator
+            document.querySelectorAll('nav a').forEach(link => {
+                if (link.href === window.location.href) {
+                    link.classList.add('current-page');
+                }
+            });
+            
+            // Product filter functionality
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelector('.filter-btn.active').classList.remove('active');
+                    this.classList.add('active');
+                    // In a real implementation, you would filter products here
+                });
+            });
+            
+            // Pagination functionality
+            document.querySelectorAll('.page-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (!this.classList.contains('active')) {
+                        document.querySelector('.page-btn.active').classList.remove('active');
+                        this.classList.add('active');
+                        // In a real implementation, you would load the page here
+                    }
+                });
+            });
+        });
+
+        // Add to Cart Functionality
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('add-to-cart') || e.target.closest('.add-to-cart')) {
+                const button = e.target.classList.contains('add-to-cart') ? e.target : e.target.closest('.add-to-cart');
+                const productId = button.dataset.productId;
+                const productName = button.closest('.product-card').querySelector('.product-title').textContent;
+                const productPrice = button.closest('.product-card').querySelector('.product-price').textContent;
+                
+                // Add product to cart
+                if (!cart[productId]) {
+                    cart[productId] = {
+                        id: productId,
+                        name: productName,
+                        price: productPrice,
+                        quantity: 0
+                    };
+                }
+                cart[productId].quantity += 1;
+                cartCount += 1;
+                
+                // Update UI
+                updateCartCount();
+                
+                // Visual feedback
+                const originalText = button.innerHTML;
+                button.innerHTML = '✓ Added to Cart!';
+                button.style.backgroundColor = '#2ecc71';
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.backgroundColor = '#3498db';
+                }, 1500);
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    e.preventDefault();
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

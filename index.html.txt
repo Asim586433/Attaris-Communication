@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attaris Communication - Home</title>
+    <style>
+        /* ===== Global Styles ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ===== Header Styles ===== */
+        header {
+            background: #2c3e50;
+            padding: 1rem;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .logo a {
+            color: white;
+            text-decoration: none;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background: #34495e;
+        }
+
+        nav ul li a.current-page {
+            background: #3498db;
+            font-weight: bold;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+        }
+
+        /* ===== Hero Section ===== */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+            padding: 150px 20px;
+            color: white;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        .cta-btn {
+            background: #3498db;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .cta-btn:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+
+        /* ===== Features Section ===== */
+        .features {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            color: #2c3e50;
+            font-size: 2.5rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: #3498db;
+            margin: 20px auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: #f9f9f9;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: #3498db;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        /* ===== Products Preview ===== */
+        .products-preview {
+            padding: 80px 0;
+            background: #ecf0f1;
+        }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .preview-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .preview-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .preview-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .preview-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .preview-card:hover .preview-image img {
+            transform: scale(1.05);
+        }
+
+        .preview-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .preview-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .preview-info .price {
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .preview-btn {
+            background: #3498db;
+            color: white;
+            padding: 8px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .preview-btn:hover {
+            background: #2980b9;
+        }
+
+        .view-all {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .view-all-btn {
+            background: #2c3e50;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .view-all-btn:hover {
+            background: #34495e;
+            transform: translateY(-3px);
+        }
+
+        /* ===== Testimonials ===== */
+        .testimonials {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background: #f9f9f9;
+            padding: 30px;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            font-size: 5rem;
+            color: #3498db;
+            opacity: 0.2;
+            position: absolute;
+            top: 10px;
+            left: 20px;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .author-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+
+        .author-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .author-info h4 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .author-info p {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 50px 20px 30px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-section p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .footer-section ul {
+            list-style-type: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: white;
+        }
+
+        .footer-links {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #34495e;
+        }
+
+        .footer-links a {
+            color: #bdc3c7;
+            margin: 0 10px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #34495e;
+            width: 100%;
+            text-align: center;
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+
+        /* ===== Responsive Design ===== */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero {
+                padding: 100px 20px;
+                min-height: 60vh;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .footer-section {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo"><a href="index.html">Attaris Communication</a></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="current-page">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                </ul>
+            </nav>
+            <div class="cart-icon">
+                🛒 <span class="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Premium Communication Equipment</h1>
+            <p>Your trusted partner for cutting-edge communication solutions in Pakistan</p>
+            <a href="products.html" class="cta-btn">Shop Now</a>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose Attaris Communication?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🚚</div>
+                    <h3>Fast Delivery</h3>
+                    <p>Get your orders delivered quickly across Pakistan with our reliable shipping network.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Quality Guarantee</h3>
+                    <p>All our products come with manufacturer warranties and our quality assurance.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📞</div>
+                    <h3>24/7 Support</h3>
+                    <p>Our technical support team is always ready to assist you with any questions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="products-preview">
+        <div class="container">
+            <h2 class="section-title">Featured Products</h2>
+            <div class="preview-grid">
+                <div class="preview-card">
+                    <div class="preview-image">
+                        <img src="https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Wireless Headset">
+                    </div>
+                    <div class="preview-info">
+                        <h3>Wireless Headset Pro</h3>
+                        <div class="price">Rs. 12,999</div>
+                        <a href="products.html" class="preview-btn">View Details</a>
+                    </div>
+                </div>
+                <div class="preview-card">
+                    <div class="preview-image">
+                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Bluetooth Earbuds">
+                    </div>
+                    <div class="preview-info">
+                        <h3>Bluetooth Earbuds X7</h3>
+                        <div class="price">Rs. 8,499</div>
+                        <a href="products.html" class="preview-btn">View Details</a>
+                    </div>
+                </div>
+                <div class="preview-card">
+                    <div class="preview-image">
+                        <img src="https://images.unsplash.com/photo-1504274066651-8d31a536b11a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Conference Speaker">
+                    </div>
+                    <div class="preview-info">
+                        <h3>Conference Speakerphone</h3>
+                        <div class="price">Rs. 24,999</div>
+                        <a href="products.html" class="preview-btn">View Details</a>
+                    </div>
+                </div>
+                <div class="preview-card">
+                    <div class="preview-image">
+                        <img src="https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Gaming Headset">
+                    </div>
+                    <div class="preview-info">
+                        <h3>Pro Gaming Headset</h3>
+                        <div class="price">Rs. 15,999</div>
+                        <a href="products.html" class="preview-btn">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="view-all">
+                <a href="products.html" class="view-all-btn">View All Products</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Our Customers Say</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">The wireless headsets I purchased from Attaris Communication have transformed my work-from-home experience. Crystal clear audio and excellent battery life!</p>
+                    <div class="testimonial-author">
+                        <div class="author-img">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Ahmed Khan">
+                        </div>
+                        <div class="author-info">
+                            <h4>Ahmed Khan</h4>
+                            <p>Karachi</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">Excellent customer service and fast delivery. The conference speakerphone works perfectly for our team meetings. Highly recommended!</p>
+                    <div class="testimonial-author">
+                        <div class="author-img">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Fatima Ali">
+                        </div>
+                        <div class="author-info">
+                            <h4>Fatima Ali</h4>
+                            <p>Lahore</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">As a content creator, I need reliable audio equipment. Attaris Communication provided exactly what I needed at competitive prices.</p>
+                    <div class="testimonial-author">
+                        <div class="author-img">
+                            <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Usman Malik">
+                        </div>
+                        <div class="author-info">
+                            <h4>Usman Malik</h4>
+                            <p>Islamabad</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Attaris Communication</h3>
+                <p>Your trusted partner for communication solutions and technology needs.</p>
+                <p>Johar Block 19, Gulistan-e-Johar, Karachi</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Customer Service</h3>
+                <ul>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="shipping-policy.html">Shipping Policy</a></li>
+                    <li><a href="returns-policy.html">Returns Policy</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-links">
+            <a href="privacy-policy.html">Privacy Policy</a> | 
+            <a href="shipping-policy.html">Shipping Policy</a> | 
+            <a href="returns-policy.html">Returns Policy</a> | 
+            <a href="faq.html">FAQ</a>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Attaris Communication. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Cart Functionality
+        let cartCount = 0;
+        const updateCartCount = () => {
+            document.querySelector('.cart-count').textContent = cartCount;
+        };
+
+        // Add to Cart Buttons (if any on page)
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', () => {
+                cartCount++;
+                updateCartCount();
+                button.textContent = 'Added!';
+                button.style.backgroundColor = '#2ecc71';
+                setTimeout(() => {
+                    button.textContent = 'Add to Cart';
+                    button.style.backgroundColor = '#3498db';
+                }, 1000);
+            });
+        });
+
+        // Current page indicator
+        document.querySelectorAll('nav ul li a').forEach(link => {
+            if (link.href === window.location.href) {
+                link.classList.add('current-page');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
